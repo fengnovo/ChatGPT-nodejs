@@ -1,12 +1,13 @@
 import { Configuration, OpenAIApi } from "openai";
 import Koa from "koa"
 import Router from "koa-router";
+import 'dotenv/config'
 
 // https://platform.openai.com/docs/api-reference/images
 
 const configuration = new Configuration({
-    organization: process.env.APP_ORG,
-    apiKey: process.env.APP_KEY,
+    organization: process.env.OPENAI_APP_ORG,
+    apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 const response = await openai.listEngines();
@@ -52,6 +53,6 @@ app.use(router.routes()).use(router.allowedMethods());
 
 // 启动服务器
 app.listen(process.env.PORT, () => {
-    console.log("Server is listening on port " + process.env.PORT);
+    console.log("Server is listening on http://localhost:" + process.env.PORT);
 });
 

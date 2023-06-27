@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="input" type="text" />
+    <h3>
+        <pre id="out"></pre>
+    </h3>
+
+
+    <script>
+        function send(prompt) {
+            if(!prompt.trim()) {
+                alert('请输入提问的问题')
+                return
+            }
+            const url = new URL('/chat', location.href)
+            url.searchParams.set('prompt', prompt)
+
+            const es = new EventSource(url)
+            out.innerHTML  = '';
+            es.onmessage = e => {
+                if(e.data === '[DONE]') {
+                    return es.close()
+                }
+                const data = JSON.parse(e.data)
+                const { content = '' } = data.choices[0].delta;
+                out.innerHTML += content;
+            }
+        }
+        input.onkeydown = e => {
+            if(e.key === 'Enter') {
+                send(e.target.value)
+            }
+        }
+    </script>
+</body>
+</html>

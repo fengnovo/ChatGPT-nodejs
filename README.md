@@ -21,5 +21,6 @@ This example starts an [HTTP Module](https://nodejs.org/api/http.html) server.
 - Start the development server `railway run yarn start`
 
 ## 📝 Notes
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890  
 
 The server started simply returns a `Hello World` payload. The server code is located in `server.mjs`.
